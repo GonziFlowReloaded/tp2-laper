@@ -1,0 +1,32 @@
+services:
+  dolibarr:
+    image: tuxgasy/dolibarr
+    container_name: dolibarr
+    ports:
+      - "8080:80"
+    environment:
+      DOLI_DB_HOST: db
+      DOLI_DB_USER: dolibarr
+      DOLI_DB_PASSWORD: dolibarrpass
+      DOLI_DB_NAME: dolibarrdb
+      DOLI_ADMIN_USER: adminasobarbaro23
+      DOLI_ADMIN_PASSWORD: adminasobarbaro23
+    depends_on:
+      - db
+    volumes:
+      - dolibarr_data:/var/www/html/documents
+
+  db:
+    image: mariadb:10.5
+    container_name: dolibarr_db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: dolibarrdb
+      MYSQL_USER: dolibarr
+      MYSQL_PASSWORD: dolibarrpass
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  dolibarr_data:
+  db_data:
